@@ -13,6 +13,7 @@ struct TimerWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var count: Int
+        var totalTime: Int
     }
 
     // Fixed non-changing properties about your activity go here!
@@ -53,15 +54,15 @@ extension TimerWidgetAttributes {
 
 extension TimerWidgetAttributes.ContentState {
     static var initial: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 60) // Timer starting at 60 seconds
+        TimerWidgetAttributes.ContentState(count: 60, totalTime: 60) // Timer starting at 60 seconds
     }
     
     static var halfway: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 30) // Timer halfway done
+        TimerWidgetAttributes.ContentState(count: 30, totalTime: 60) // Timer halfway done
     }
     
     static var complete: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 0) // Timer completed
+        TimerWidgetAttributes.ContentState(count: 0, totalTime: 60) // Timer completed
     }
 }
 
