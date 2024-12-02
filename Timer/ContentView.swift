@@ -16,7 +16,7 @@ struct ContentView: View {
     @FocusState var timerNameFocused: Bool
     
     //@State var msg: String = ""
-    var beginningTime: Int = 60
+    @State var totalTime: Int = 60
     
     var body: some View {
         VStack (spacing: 8){
@@ -30,10 +30,16 @@ struct ContentView: View {
             Text("\(count)s")
                 .font(.system(size: 64))
             
+            HStack{
+                ProgressView(value: CGFloat(count)/CGFloat(totalTime))
+                Text("\(totalTime)")
+            }
+            
             HStack(spacing: 20) {
                 //-5s button
                 Button {
                     count -= 5
+                    totalTime -= 5
                 } label: {
                     Text("- 5s")
                         .frame(width: 50, height: 50)
@@ -46,6 +52,7 @@ struct ContentView: View {
                 //+5s button
                 Button {
                     count += 5
+                    totalTime += 5
                 } label: {
                     Text("+ 5s")
                         .frame(width: 50, height: 50)
@@ -75,6 +82,7 @@ struct ContentView: View {
     
     func startTimer() {
         timerNameFocused = false
+        totalTime = count
         guard !timerStarted else { return } // Prevent multiple timers
         timerStarted = true
         
