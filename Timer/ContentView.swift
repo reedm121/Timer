@@ -9,14 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @State var count: Int = 60
+    @State var totalTime: Int = 60
     @State var timerStarted: Bool = false
     @State var timer: Timer?
     
     @State var timerName: String = ""
     @FocusState var timerNameFocused: Bool
-    
-    //@State var msg: String = ""
-    @State var totalTime: Int = 60
     
     var body: some View {
         VStack (spacing: 8){

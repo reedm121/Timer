@@ -46,12 +46,17 @@ struct TimerWidgetLiveActivity: Widget {
     }
 }
 
+//MARK: previews
+
+//for the previews, set your non-changing properties
 extension TimerWidgetAttributes {
     static var preview: TimerWidgetAttributes {
         TimerWidgetAttributes(timerName: "Focus TimerWidget")
     }
 }
 
+
+//for the previews add some ContentStates for the timer
 extension TimerWidgetAttributes.ContentState {
     static var initial: TimerWidgetAttributes.ContentState {
         TimerWidgetAttributes.ContentState(count: 60, totalTime: 60) // Timer starting at 60 seconds
@@ -66,6 +71,7 @@ extension TimerWidgetAttributes.ContentState {
     }
 }
 
+//compact dynamic island preview
 #Preview(as: .dynamicIsland(.compact), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
@@ -74,6 +80,7 @@ extension TimerWidgetAttributes.ContentState {
     TimerWidgetAttributes.ContentState.complete
 }
 
+//minimal dynamic island preview
 #Preview(as: .dynamicIsland(.minimal), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
@@ -82,6 +89,7 @@ extension TimerWidgetAttributes.ContentState {
     TimerWidgetAttributes.ContentState.complete
 }
 
+//expanded dynamic island preview
 #Preview(as: .dynamicIsland(.expanded), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
