@@ -11,7 +11,10 @@ import SwiftUI
 struct TimerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack{
+                ContentView()
+                    .navigationTitle("Timer App")
+            }
         }
     }
 }
