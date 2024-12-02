@@ -31,6 +31,7 @@ struct ContentView: View {
                 .font(.system(size: 64))
             
             HStack(spacing: 20) {
+                //-5s button
                 Button {
                     count -= 5
                 } label: {
@@ -42,6 +43,7 @@ struct ContentView: View {
                 .buttonBorderShape(.circle)
                 .disabled(count <= 4)
                 
+                //+5s button
                 Button {
                     count += 5
                 } label: {

@@ -53,15 +53,15 @@ extension TimerWidgetAttributes {
 
 extension TimerWidgetAttributes.ContentState {
     static var initial: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 60) // TimerWidget starting at 60 seconds
+        TimerWidgetAttributes.ContentState(count: 60) // Timer starting at 60 seconds
     }
     
     static var halfway: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 30) // TimerWidget halfway done
+        TimerWidgetAttributes.ContentState(count: 30) // Timer halfway done
     }
     
     static var complete: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 0) // TimerWidget completed
+        TimerWidgetAttributes.ContentState(count: 0) // Timer completed
     }
 }
 
@@ -70,22 +70,30 @@ extension TimerWidgetAttributes.ContentState {
 } contentStates: {
     TimerWidgetAttributes.ContentState.initial
     TimerWidgetAttributes.ContentState.halfway
+    TimerWidgetAttributes.ContentState.complete
 }
 
 #Preview(as: .dynamicIsland(.minimal), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
+    TimerWidgetAttributes.ContentState.initial
     TimerWidgetAttributes.ContentState.halfway
+    TimerWidgetAttributes.ContentState.complete
 }
 
 #Preview(as: .dynamicIsland(.expanded), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
+    TimerWidgetAttributes.ContentState.initial
+    TimerWidgetAttributes.ContentState.halfway
     TimerWidgetAttributes.ContentState.complete
 }
 
+//Lock screen preview
 #Preview(as: .content, using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
     TimerWidgetAttributes.ContentState.initial
+    TimerWidgetAttributes.ContentState.halfway
+    TimerWidgetAttributes.ContentState.complete
 }
