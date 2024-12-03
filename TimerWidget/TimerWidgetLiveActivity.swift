@@ -23,17 +23,19 @@ struct TimerWidgetAttributes: ActivityAttributes {
 struct TimerWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TimerWidgetAttributes.self) { context in
-            //lock screen
+            // ----------- lock screen -----------
             VStack{
                 Text("\(context.attributes.timerName)")
                 Text("\(context.state.count)s")
+                    .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
                 ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
                     .padding(.horizontal)
             }
         } dynamicIsland: { context in
+            // ----------- expanded -----------
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("\(context.state.count)s")
+                    Text("\(context.attributes.timerName)")
                         .padding(.horizontal)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
@@ -45,15 +47,22 @@ struct TimerWidgetLiveActivity: Widget {
                         ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
                             .padding(.horizontal)
                         
-                        
+                        Text("\(context.state.count)s")
+                            .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
                     }
                 }
-            } compactLeading: {
+            }
+            // ----------- compact -----------
+            compactLeading: {
                 Text("\(context.attributes.timerName)")
             } compactTrailing: {
                 Text("\(context.state.count)s")
-            } minimal: {
+                    .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
+            }
+            // ---------- minimal ------------
+            minimal: {
                 Text("\(context.state.count)s")
+                    .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
             }
         }
     }
@@ -84,8 +93,8 @@ extension TimerWidgetAttributes.ContentState {
     }
 }
 
-//compact dynamic island preview
-#Preview(as: .dynamicIsland(.compact), using: TimerWidgetAttributes.preview) {
+//minimal dynamic island preview
+#Preview(as: .dynamicIsland(.minimal), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
     TimerWidgetAttributes.ContentState.initial
@@ -93,8 +102,8 @@ extension TimerWidgetAttributes.ContentState {
     TimerWidgetAttributes.ContentState.complete
 }
 
-//minimal dynamic island preview
-#Preview(as: .dynamicIsland(.minimal), using: TimerWidgetAttributes.preview) {
+//compact dynamic island preview
+#Preview(as: .dynamicIsland(.compact), using: TimerWidgetAttributes.preview) {
     TimerWidgetLiveActivity()
 } contentStates: {
     TimerWidgetAttributes.ContentState.initial
