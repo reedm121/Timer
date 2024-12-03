@@ -13,34 +13,47 @@ struct TimerWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var count: Int
-        var totalTime: Int
     }
 
     // Fixed non-changing properties about your activity go here!
+    var totalTime: Int
     var timerName: String
 }
 
 struct TimerWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TimerWidgetAttributes.self) { context in
-            Text("lock screen banner")
+            //lock screen
+            VStack{
+                Text("\(context.attributes.timerName)")
+                Text("\(context.state.count)s")
+                ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
+                    .padding(.horizontal)
+            }
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading expanded")
+                    Text("\(context.state.count)s")
+                        .padding(.horizontal)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing expanded")
+                    Text("\(context.attributes.totalTime)")
+                        .padding(.horizontal)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom expanded")
+                    VStack {
+                        ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
+                            .padding(.horizontal)
+                        
+                        
+                    }
                 }
             } compactLeading: {
-                Text("Compact L")
+                Text("\(context.attributes.timerName)")
             } compactTrailing: {
-                Text("Compact T")
+                Text("\(context.state.count)s")
             } minimal: {
-                Text("min")
+                Text("\(context.state.count)s")
             }
         }
     }
@@ -51,7 +64,7 @@ struct TimerWidgetLiveActivity: Widget {
 //for the previews, set your non-changing properties
 extension TimerWidgetAttributes {
     static var preview: TimerWidgetAttributes {
-        TimerWidgetAttributes(timerName: "Focus TimerWidget")
+        TimerWidgetAttributes(totalTime: 60, timerName: "Stretch timer")
     }
 }
 
@@ -59,15 +72,15 @@ extension TimerWidgetAttributes {
 //for the previews add some ContentStates for the timer
 extension TimerWidgetAttributes.ContentState {
     static var initial: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 60, totalTime: 60) // Timer starting at 60 seconds
+        TimerWidgetAttributes.ContentState(count: 60) // Timer starting at 60 seconds
     }
     
     static var halfway: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 30, totalTime: 60) // Timer halfway done
+        TimerWidgetAttributes.ContentState(count: 30) // Timer halfway done
     }
     
     static var complete: TimerWidgetAttributes.ContentState {
-        TimerWidgetAttributes.ContentState(count: 0, totalTime: 60) // Timer completed
+        TimerWidgetAttributes.ContentState(count: 0) // Timer completed
     }
 }
 
