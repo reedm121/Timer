@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ActivityKit
 
 struct ContentView: View {
     @State var count: Int = 60
@@ -84,9 +85,12 @@ struct ContentView: View {
         guard !timerStarted else { return } // Prevent multiple timers
         timerStarted = true
         
+        startLiveActivity() // Start Live Activity
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             if count > 0 {
                 count -= 1
+                updateLiveActivity()
             } else {
                 stopTimer() // Stop the timer when the count reaches 0
             }
@@ -97,6 +101,72 @@ struct ContentView: View {
         timer?.invalidate() // Invalidate the timer
         timer = nil
         timerStarted = false
+        
+        stopLiveActivity()
+    }
+    
+    // MARK: live activity functions
+    
+    func startLiveActivity() {
+        if ActivityAuthorizationInfo().areActivitiesEnabled {
+            do {
+                let attributes = TimerWidgetAttributes(
+                    totalTime: totalTime,
+                    timerName: timerName.isEmpty ? "Timer" : timerName
+                )
+                
+                let initialState = TimerWidgetAttributes.ContentState(count: count)
+                
+                let activity = try Activity.request(
+                    attributes: attributes,
+                    content: .init(state: initialState, staleDate: nil),
+                    pushType: nil
+                )
+                
+            } catch {
+                let errorMessage = """
+                    Couldn't start activity
+                    ------------------------
+                    \(String(describing: error))
+                    """
+                print(errorMessage)
+            }
+        } else {
+            print("Live Activities are not enabled.")
+        }
+    }
+    
+    
+    func updateLiveActivity() {
+        guard let activity = Activity<TimerWidgetAttributes>.activities.first else {
+            return
+        }
+        
+        let contentState = TimerWidgetAttributes.ContentState(count: count)
+        
+        Task {
+            await activity.update(
+                ActivityContent<TimerWidgetAttributes.ContentState>(
+                    state: contentState,
+                    staleDate: Date.now + 15 // Content expires in 15 seconds
+                )
+            )
+            print("Live Activity updated!")
+        }
+    }
+    
+    
+    func stopLiveActivity() {
+        guard let activity = Activity<TimerWidgetAttributes>.activities.first else {
+            print("No active Live Activity found.")
+            return
+        }
+        
+        Task {
+            await activity.end(ActivityContent(state: TimerWidgetAttributes.ContentState(count: 0),staleDate: nil), dismissalPolicy: .immediate)
+            print("Live Activity ended successfully.")
+            
+        }
     }
 }
 

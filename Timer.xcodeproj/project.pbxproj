@@ -44,12 +44,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A23F1CD72CFE3E5A00A9FCA9 /* Exceptions for "TimerWidget" folder in "TimerWidgetExtension" target */ = {
+		A23F1D002CFF8F0700A9FCA9 /* Exceptions for "TimerWidget" folder in "TimerWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets.xcassets,
 				Info.plist,
 			);
 			target = A23F1CC32CFE3E5700A9FCA9 /* TimerWidgetExtension */;
+		};
+		A23F1D022CFF925100A9FCA9 /* Exceptions for "TimerWidget" folder in "Timer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TimerWidgetLiveActivity.swift,
+			);
+			target = A23F1C962CFE3C5500A9FCA9 /* Timer */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -62,7 +70,8 @@
 		A23F1CCA2CFE3E5700A9FCA9 /* TimerWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				A23F1CD72CFE3E5A00A9FCA9 /* Exceptions for "TimerWidget" folder in "TimerWidgetExtension" target */,
+				A23F1D022CFF925100A9FCA9 /* Exceptions for "TimerWidget" folder in "Timer" target */,
+				A23F1D002CFF8F0700A9FCA9 /* Exceptions for "TimerWidget" folder in "TimerWidgetExtension" target */,
 			);
 			path = TimerWidget;
 			sourceTree = "<group>";

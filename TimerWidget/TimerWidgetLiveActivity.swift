@@ -14,10 +14,10 @@ struct TimerWidgetAttributes: ActivityAttributes {
         // Dynamic stateful properties about your activity go here!
         var count: Int
     }
-
+    
     // Fixed non-changing properties about your activity go here!
     var totalTime: Int
-    var timerName: String
+    var timerName: String = "Timer"
 }
 
 struct TimerWidgetLiveActivity: Widget {
@@ -29,7 +29,7 @@ struct TimerWidgetLiveActivity: Widget {
                 Text("\(context.state.count)s")
                     .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
                 ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
-                    .padding(.horizontal)
+                    .padding([.leading, .bottom, .trailing])
             }
         } dynamicIsland: { context in
             // ----------- expanded -----------
@@ -42,14 +42,13 @@ struct TimerWidgetLiveActivity: Widget {
                     Text("\(context.attributes.totalTime)")
                         .padding(.horizontal)
                 }
+                DynamicIslandExpandedRegion(.center) {
+                    Text("\(context.state.count)s")
+                        .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
+                }
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack {
-                        ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
-                            .padding(.horizontal)
-                        
-                        Text("\(context.state.count)s")
-                            .foregroundStyle(context.state.count <= 5 ? Color.red : .primary)
-                    }
+                    ProgressView(value: Double(context.state.count) / Double(context.attributes.totalTime))
+                        .padding(.horizontal)
                 }
             }
             // ----------- compact -----------
